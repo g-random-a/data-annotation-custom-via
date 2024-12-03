@@ -21,7 +21,7 @@ function _via_view_manager(data, view_annotator, container) {
   // registers on_event(), emit_event(), ... methods from
   // _via_event to let this module listen and emit events
   _via_event.call( this );
-
+ 
   this.d.on_event('project_loaded', this._ID, this._on_event_project_loaded.bind(this));
   this.d.on_event('project_updated', this._ID, this._on_event_project_updated.bind(this));
   this.d.on_event('view_bulk_add', this._ID, this._on_event_view_bulk_add.bind(this));
@@ -33,10 +33,94 @@ function _via_view_manager(data, view_annotator, container) {
   this._init_ui_elements();
 }
 
-_via_view_manager.prototype._init = function() {
+_via_view_manager.prototype._init = async function() {
   this._init_ui_elements();
+
+  const sessionId = this._getSessionIdFromUrl();
+  if (this.sessionId) {
+    const response = await this._fetchAnnotationImage(sessionId); // Fetch the image metadata
+    if (!response && !response.ok) {
+      _via_util_msg_show('Cannot move to next view!');
+    }
+    
+    const imageMetadata = response.sourceUrls;
+
+    this.d.store.attribute = response.attributes;
+
+    if (imageMetadata) {
+      for (var i = 0; i < imageMetadata.length; i++) {
+        this._on_add_media_remote_direct(imageMetadata[i], response.fileType);
+      }
+    } else {
+      console.warn('Failed to fetch or initialize annotation image.');
+    }
+  } else {
+    console.log('No sessionId found in URL. Proceeding with default initialization.');
+  }
   this._view_selector_update();
 }
+
+
+_via_view_manager.prototype._fetchAnnotationImage = async function(sessionId) {
+  try {
+    const response = await fetch(`http://127.0.0.1:5000/api/get-annotation/${sessionId}`);
+    if (!response.ok) {
+      throw new Error('Failed to fetch annotation image');
+    }
+    const data = await response.json(); // Assuming the API returns JSON
+    return data;
+  } catch (error) {
+    console.error('Error fetching annotation image:', error);
+    _via_util_msg_show('Unable to load annotation task.');
+    return null;
+  }
+};
+
+// _via_view_manager.prototype._startAnnotationWithImage = function(imageUrl) {
+//   if (!imageUrl) {
+//     return;
+//   }
+  
+//   // Create a view for the fetched image and show it
+//   const newView = {
+//     fname: imageUrl,
+//     type: _via_util_infer_file_type_from_filename(imageUrl),
+//     loc: _VIA_FILE_LOC.URIHTTP,
+//     src: imageUrl
+//   };
+
+//   this._file_add_from_filelist([newView]);
+// };
+
+_via_view_manager.prototype._getSessionIdFromUrl = function() {
+  const params = new URLSearchParams(window.location.search);
+  const sessionID = params.get('sessionId');
+  this.sessionId = sessionID;
+  return sessionID; // Extract sessionId
+};
+
+_via_view_manager.prototype._on_add_media_remote_direct = function(imageUrl, type) {
+  if (!imageUrl) {
+    _via_util_msg_show('Invalid or missing image URL.');
+    return;
+  }
+
+  const filelist = [
+    {
+      'fname': imageUrl, // Use the URL as the file name
+      'type': _via_util_infer_file_type_from_filename(type), // Infer file type (e.g., image, video)
+      'loc': _VIA_FILE_LOC.URIHTTP, // Indicate it's a remote URL
+      'src': imageUrl // The actual URL
+    }
+  ];
+
+  console.log(filelist);
+
+  // Use the existing function to add the media
+  this._file_add_from_filelist(filelist);
+};
+
+
 
 _via_view_manager.prototype._init_ui_elements = function() {
   this.pname = document.createElement('input');
@@ -62,6 +146,10 @@ _via_view_manager.prototype._init_ui_elements = function() {
   this.c.appendChild(this.pname);
   this.c.appendChild(this.view_selector);
   this.c.appendChild(this.view_filter_regex);
+
+  console.log("--------------------------");
+  console.log(this.d);
+  console.log(this.data);
 }
 
 //

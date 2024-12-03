@@ -210,6 +210,7 @@ _via_control_panel.prototype._page_show_import_export = function(d) {
 
 _via_control_panel.prototype._page_on_action_import = function(d) {
   if ( d._action_id === 'via_page_button_import' ) {
+    console.log("importing project");
     if ( d.via_page_import_pid !== '' ) {
       this.via.s._project_pull(d.via_page_import_pid).then( function(remote_rev) {
         try {

@@ -277,6 +277,7 @@ _via_editor.prototype.attributes_update = function() {
   }
 
   this.attribute_clear();
+  console.log(this.attribute_view)
 
   if ( Object.keys(this.d.store.attribute).length ) {
     this.attribute_view.appendChild( this.get_attribute_header() );
@@ -590,13 +591,14 @@ _via_editor.prototype.metadata_edit = function(e) {
   var mid = e.target.parentNode.dataset.mid;
   console.log('@todo: edit metadata: fid=' + fid + ', mid=' + mid);
 }
-
+ 
 _via_editor.prototype.on_attribute_create = function(e) {
   var new_attribute_name = this.new_attribute_name_input.value;
   this.d.attribute_add(new_attribute_name,
                        _VIA_DEFAULT_ATTRIBUTE_ANCHOR_ID,
                        _VIA_ATTRIBUTE_TYPE.TEXT).then( function(ok) {
     this.attributes_update();
+    console.log(this.d.store.attribute);
     // attribute was added
   }.bind(this), function(err) {
     console.log(err);

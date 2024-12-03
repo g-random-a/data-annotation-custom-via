@@ -290,6 +290,8 @@ function _via_util_page_process_action(e) {
   for ( var action_id in _via_page_action_map ) {
     if ( e.target.id === action_id ) {
       var page_data = _via_util_page_gather_user_input();
+      console.log('Action: ' + action);
+      console.log(page_data);
       page_data['_action_id'] = e.target.id;
       _via_page_action_map[action_id].call(this, page_data);
       _via_util_page_hide();

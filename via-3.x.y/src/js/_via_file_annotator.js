@@ -189,116 +189,115 @@ _via_file_annotator.prototype._file_load_show_error_page = function() {
   page.setAttribute('class', 'error_page');
 
   var title = document.createElement('h1');
-  title.innerHTML = 'File Not Found!';
+  title.innerHTML = 'Not Found!';
   page.appendChild(title);
 
   var msg = document.createElement('p');
-  msg.innerHTML = 'File "<code>' + this.d.file_get_uri(this.fid) + '</code>" not found. ';
-  msg.innerHTML += 'VIA application will automatically reload this file when you update one of the properties below.';
+  msg.innerHTML += " Error Loading, Please check your network connection or session Link";
   page.appendChild(msg);
 
-  var table = document.createElement('table');
-  var filename_row = document.createElement('tr');
-  var filename_label = document.createElement('td');
-  filename_label.innerHTML = 'Filename';
-  var filename_cell = document.createElement('td');
-  var filename_input = document.createElement('input');
-  filename_input.setAttribute('type', 'text');
-  filename_input.setAttribute('value', this.d.store.file[this.fid].fname);
-  filename_input.setAttribute('data-pname', 'fname');
-  filename_input.addEventListener('change', this._file_on_attribute_update.bind(this));
-  filename_cell.appendChild(filename_input);
-  filename_row.appendChild(filename_label);
-  filename_row.appendChild(filename_cell);
-  page.appendChild(filename_row);
+  // var table = document.createElement('table');
+  // var filename_row = document.createElement('tr');
+  // var filename_label = document.createElement('td');
+  // filename_label.innerHTML = 'Filename';
+  // var filename_cell = document.createElement('td');
+  // var filename_input = document.createElement('input');
+  // filename_input.setAttribute('type', 'text');
+  // filename_input.setAttribute('value', this.d.store.file[this.fid].fname);
+  // filename_input.setAttribute('data-pname', 'fname');
+  // filename_input.addEventListener('change', this._file_on_attribute_update.bind(this));
+  // filename_cell.appendChild(filename_input);
+  // filename_row.appendChild(filename_label);
+  // filename_row.appendChild(filename_cell);
+  // page.appendChild(filename_row);
 
-  var filetype_row = document.createElement('tr');
-  var filetype_label = document.createElement('td');
-  filetype_label.innerHTML = 'File Type';
-  filetype_row.appendChild(filetype_label);
-  var filetype_select = document.createElement('select');
-  filetype_select.setAttribute('data-pname', 'type');
-  filetype_select.addEventListener('change', this._file_on_attribute_update.bind(this));
+  // var filetype_row = document.createElement('tr');
+  // var filetype_label = document.createElement('td');
+  // filetype_label.innerHTML = 'File Type';
+  // filetype_row.appendChild(filetype_label);
+  // var filetype_select = document.createElement('select');
+  // filetype_select.setAttribute('data-pname', 'type');
+  // filetype_select.addEventListener('change', this._file_on_attribute_update.bind(this));
 
-  for ( var filetype in _VIA_FILE_TYPE ) {
-    var oi = document.createElement('option');
-    oi.setAttribute('value', _VIA_FILE_TYPE[filetype]);
-    oi.innerHTML = filetype;
-    if ( this.d.store.file[this.fid].type === _VIA_FILE_TYPE[filetype] ) {
-      oi.setAttribute('selected', '');
-    }
-    filetype_select.appendChild(oi);
-  }
-  var filetype_select_cell = document.createElement('td');
-  filetype_select_cell.appendChild(filetype_select);
-  filetype_row.appendChild(filetype_select_cell);
-  page.appendChild(filetype_row);
+  // for ( var filetype in _VIA_FILE_TYPE ) {
+  //   var oi = document.createElement('option');
+  //   oi.setAttribute('value', _VIA_FILE_TYPE[filetype]);
+  //   oi.innerHTML = filetype;
+  //   if ( this.d.store.file[this.fid].type === _VIA_FILE_TYPE[filetype] ) {
+  //     oi.setAttribute('selected', '');
+  //   }
+  //   filetype_select.appendChild(oi);
+  // }
+  // var filetype_select_cell = document.createElement('td');
+  // filetype_select_cell.appendChild(filetype_select);
+  // filetype_row.appendChild(filetype_select_cell);
+  // page.appendChild(filetype_row);
 
-  var fileloc_row = document.createElement('tr');
-  var fileloc_label = document.createElement('td');
-  fileloc_label.innerHTML = 'File Location';
-  fileloc_row.appendChild(fileloc_label);
-  var fileloc_select = document.createElement('select');
-  fileloc_select.setAttribute('data-pname', 'loc');
-  fileloc_select.addEventListener('change', this._file_on_attribute_update.bind(this));
-  for ( var fileloc in _VIA_FILE_LOC ) {
-    var oi = document.createElement('option');
-    oi.setAttribute('value', _VIA_FILE_LOC[fileloc]);
-    oi.innerHTML = fileloc;
-    if ( this.d.store.file[this.fid].loc === _VIA_FILE_LOC[fileloc] ) {
-      oi.setAttribute('selected', '');
-    }
-    fileloc_select.appendChild(oi);
-  }
-  var fileloc_cell = document.createElement('td');
-  fileloc_cell.appendChild(fileloc_select);
-  if ( this.d.store.file[this.fid].loc !== _VIA_FILE_LOC.LOCAL ) {
-    var fileloc = this.d.store.file[this.fid].loc;
-    var locprefix_input = document.createElement('input');
-    locprefix_input.setAttribute('type', 'text');
-    locprefix_input.setAttribute('value', this.d.store.config.file.loc_prefix[fileloc]);
-    locprefix_input.setAttribute('data-pname', 'loc_prefix');
-    locprefix_input.setAttribute('title', 'Location prefix (or path) that will be automatically added to file locations. For example, if you add "http://www.mysite.com/data/images/" as the location prefix, all your images will be sourced from this site.');
-    locprefix_input.addEventListener('change', this._file_on_attribute_update.bind(this));
-    fileloc_cell.appendChild(locprefix_input);
-  }
-  fileloc_row.appendChild(fileloc_cell);
-  page.appendChild(fileloc_row);
+  // var fileloc_row = document.createElement('tr');
+  // var fileloc_label = document.createElement('td');
+  // fileloc_label.innerHTML = 'File Location';
+  // fileloc_row.appendChild(fileloc_label);
+  // var fileloc_select = document.createElement('select');
+  // fileloc_select.setAttribute('data-pname', 'loc');
+  // fileloc_select.addEventListener('change', this._file_on_attribute_update.bind(this));
+  // for ( var fileloc in _VIA_FILE_LOC ) {
+  //   var oi = document.createElement('option');
+  //   oi.setAttribute('value', _VIA_FILE_LOC[fileloc]);
+  //   oi.innerHTML = fileloc;
+  //   if ( this.d.store.file[this.fid].loc === _VIA_FILE_LOC[fileloc] ) {
+  //     oi.setAttribute('selected', '');
+  //   }
+  //   fileloc_select.appendChild(oi);
+  // }
+  // var fileloc_cell = document.createElement('td');
+  // fileloc_cell.appendChild(fileloc_select);
+  // if ( this.d.store.file[this.fid].loc !== _VIA_FILE_LOC.LOCAL ) {
+  //   var fileloc = this.d.store.file[this.fid].loc;
+  //   var locprefix_input = document.createElement('input');
+  //   locprefix_input.setAttribute('type', 'text');
+  //   locprefix_input.setAttribute('value', this.d.store.config.file.loc_prefix[fileloc]);
+  //   locprefix_input.setAttribute('data-pname', 'loc_prefix');
+  //   locprefix_input.setAttribute('title', 'Location prefix (or path) that will be automatically added to file locations. For example, if you add "http://www.mysite.com/data/images/" as the location prefix, all your images will be sourced from this site.');
+  //   locprefix_input.addEventListener('change', this._file_on_attribute_update.bind(this));
+  //   fileloc_cell.appendChild(locprefix_input);
+  // }
+  // fileloc_row.appendChild(fileloc_cell);
+  // page.appendChild(fileloc_row);
 
-  var filesrc_row = document.createElement('tr');
-  var filesrc_label = document.createElement('td');
-  filesrc_label.innerHTML = 'File Source';
-  filesrc_row.appendChild(filesrc_label);
-  var filesrc_input;
-  if ( this.d.store.file[this.fid].loc === _VIA_FILE_LOC.LOCAL ) {
-    filesrc_input = document.createElement('input');
-    filesrc_input.setAttribute('type', 'file');
-    if ( this.d.file_ref[this.fid] ) {
-      filesrc_input.setAttribute('files', [ this.d.file_ref[this.fid] ]);
-    }
-  } else {
-    if ( this.d.store.file[this.fid].loc === _VIA_FILE_LOC.INLINE ) {
-      filesrc_input = document.createElement('textarea');
-      filesrc_input.setAttribute('rows', 5);
-      filesrc_input.setAttribute('cols', 100);
-      filesrc_input.innerHTML = this.d.store.file[this.fid].src;
-    } else {
-      filesrc_input = document.createElement('input');
-      filesrc_input.setAttribute('type', 'text');
-      filesrc_input.setAttribute('value', this.d.store.file[this.fid].src)
-    }
-  }
-  filesrc_input.setAttribute('data-pname', 'src');
-  filesrc_input.addEventListener('change', this._file_on_attribute_update.bind(this));
-  var filesrc_cell = document.createElement('td');
-  filesrc_cell.appendChild(filesrc_input);
-  filesrc_row.appendChild(filesrc_cell);
-  page.appendChild(filesrc_row);
+  // var filesrc_row = document.createElement('tr');
+  // var filesrc_label = document.createElement('td');
+  // filesrc_label.innerHTML = 'File Source';
+  // filesrc_row.appendChild(filesrc_label);
+  // var filesrc_input;
+  // if ( this.d.store.file[this.fid].loc === _VIA_FILE_LOC.LOCAL ) {
+  //   filesrc_input = document.createElement('input');
+  //   filesrc_input.setAttribute('type', 'file');
+  //   if ( this.d.file_ref[this.fid] ) {
+  //     filesrc_input.setAttribute('files', [ this.d.file_ref[this.fid] ]);
+  //   }
+  // } else {
+  //   if ( this.d.store.file[this.fid].loc === _VIA_FILE_LOC.INLINE ) {
+  //     filesrc_input = document.createElement('textarea');
+  //     filesrc_input.setAttribute('rows', 5);
+  //     filesrc_input.setAttribute('cols', 100);
+  //     filesrc_input.innerHTML = this.d.store.file[this.fid].src;
+  //   } else {
+  //     filesrc_input = document.createElement('input');
+  //     filesrc_input.setAttribute('type', 'text');
+  //     filesrc_input.setAttribute('value', this.d.store.file[this.fid].src)
+  //   }
+  // }
+  // filesrc_input.setAttribute('data-pname', 'src');
+  // filesrc_input.addEventListener('change', this._file_on_attribute_update.bind(this));
+  // var filesrc_cell = document.createElement('td');
+  // filesrc_cell.appendChild(filesrc_input);
+  // filesrc_row.appendChild(filesrc_cell);
+  // page.appendChild(filesrc_row);
 
   // control buttons
   var bpanel = document.createElement('p');
   var reload = document.createElement('button');
-  reload.innerHTML = 'Reload File';
+  reload.innerHTML = 'Reload';
   reload.addEventListener('click', function() {
     this.va.view_show(this.vid);
   }.bind(this));
@@ -365,17 +364,17 @@ _via_file_annotator.prototype._file_load = function() {
       ok_callback();
     }.bind(this));
     this.file_html_element.addEventListener('abort', function(e) {
-      _via_util_msg_show('File load aborted [' + this.d.store.file[this.fid].fname + ']' );
+      _via_util_msg_show('loading aborted ' );
       this._file_load_show_error_page();
       err_callback();
     }.bind(this));
     this.file_html_element.addEventListener('stalled', function(e) {
-      _via_util_msg_show('File load stalled [' + this.d.store.file[this.fid].fname + ']' );
+      _via_util_msg_show('loading stalled ' );
       this._file_load_show_error_page();
       err_callback();
     }.bind(this));
     this.file_html_element.addEventListener('error', function(e) {
-      _via_util_msg_show('Error loading file [' + this.d.store.file[this.fid].fname + ']' );
+      _via_util_msg_show('Error loading, please try again.' );
       this._file_load_show_error_page();
       err_callback();
     }.bind(this));
