@@ -81,7 +81,7 @@ _via_data.prototype._attribute_exist = function(aname) {
     }
   }
   return false;
-}
+} 
 
 _via_data.prototype.attribute_add = function(name, anchor_id, type, desc, options, default_option_id) {
   return new Promise( function(ok_callback, err_callback) {
@@ -748,30 +748,70 @@ _via_data.prototype._cache_get_attribute_group = function(anchor_id_list) {
 //
 // project
 //
+// _via_data.prototype.project_save = function() {
+//   return new Promise( function(ok_callback, err_callback) {
+//     try {
+//       // @todo: decide on whether we want to include the base64 data
+//       // of inline files (i.e. this.store.file[fid].loc === _VIA_FILE_LOC.INLINE)
+//       var data_blob = new Blob( [JSON.stringify(this.store)],
+//                                 {type: 'text/json;charset=utf-8'});
+//       var filename = [];
+//       if ( this.store.project.pid === _VIA_PROJECT_ID_MARKER ) {
+//         filename.push('via_project_');
+//       } else {
+//         filename.push(this.store.project.pid.substr(0,8) + '_');
+//       }
+//       filename.push(_via_util_date_to_filename_str(Date.now()));
+//       filename.push('.json');
+//       _via_util_download_as_file(data_blob, filename.join(''));
+//       ok_callback();
+//     }
+//     catch(err) {
+//       _via_util_msg_show('Failed to save project! [' + err + ']');
+//       err_callback();
+//     }
+//   }.bind(this));
+// }
+
 _via_data.prototype.project_save = function() {
-  return new Promise( function(ok_callback, err_callback) {
+  return new Promise(function(ok_callback, err_callback) {
     try {
-      // @todo: decide on whether we want to include the base64 data
-      // of inline files (i.e. this.store.file[fid].loc === _VIA_FILE_LOC.INLINE)
-      var data_blob = new Blob( [JSON.stringify(this.store)],
-                                {type: 'text/json;charset=utf-8'});
-      var filename = [];
-      if ( this.store.project.pid === _VIA_PROJECT_ID_MARKER ) {
-        filename.push('via_project_');
-      } else {
-        filename.push(this.store.project.pid.substr(0,8) + '_');
-      }
-      filename.push(_via_util_date_to_filename_str(Date.now()));
-      filename.push('.json');
-      _via_util_download_as_file(data_blob, filename.join(''));
-      ok_callback();
-    }
-    catch(err) {
+      // Prepare data to send to the server
+      const projectData = JSON.stringify(this.store);
+
+      // Send the project data to the backend
+      fetch('http://127.0.0.1:5000/api/save-annotation', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: projectData
+      })
+      .then(response => {
+        if (response.ok) {
+          _via_util_msg_show('Saved Successfully!');
+          return response.json();
+        } else {
+          throw new Error('Failed to save project to the server.');
+        }
+      })
+      .then(data => {
+        console.log('Project saved successfully:', data);
+        ok_callback();
+      })
+      .catch(err => {
+        console.error('Error saving project:', err);
+        _via_util_msg_show('Failed to save project! [' + err + ']');
+        err_callback();
+      });
+    } catch (err) {
+      console.error('Failed to prepare project data for saving:', err);
       _via_util_msg_show('Failed to save project! [' + err + ']');
       err_callback();
     }
   }.bind(this));
-}
+};
+
 
 _via_data.prototype.project_load = function(project_data_str) {
   return new Promise( function(ok_callback, err_callback) {

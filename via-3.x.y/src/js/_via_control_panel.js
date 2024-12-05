@@ -24,7 +24,7 @@ _via_control_panel.prototype._init = function(type) {
 
   var logo_panel = document.createElement('div');
   logo_panel.setAttribute('class', 'logo');
-  logo_panel.innerHTML = '<a href="http://www.robots.ox.ac.uk/~vgg/software/via/" title="VGG Image Annotator (VIA)" target="_blank">VIA</a>'
+  logo_panel.innerHTML = 'Platform X - Annotation Task'
   this.c.appendChild(logo_panel);
 
   this.c.appendChild(this.via.vm.c);
@@ -32,7 +32,6 @@ _via_control_panel.prototype._init = function(type) {
 
   this._add_spacer();
 
-  this._add_project_tools();
 
   this._add_spacer();
 
@@ -40,11 +39,11 @@ _via_control_panel.prototype._init = function(type) {
 
   this._add_spacer();
 
-  var editor = _via_util_get_svg_button('micon_insertcomment', 'Show/Hide Attribute Editor');
-  editor.addEventListener('click', function() {
-    this.emit_event( 'editor_toggle', {});
-  }.bind(this));
-  this.c.appendChild(editor);
+  // var editor = _via_util_get_svg_button('micon_insertcomment', 'Show/Hide Attribute Editor');
+  // editor.addEventListener('click', function() {
+  //   this.emit_event( 'editor_toggle', {});
+  // }.bind(this));
+  // this.c.appendChild(editor);
 
   this._add_spacer();
 
@@ -57,21 +56,25 @@ _via_control_panel.prototype._init = function(type) {
     this._add_spacer();
   }
 
-  this._add_project_share_tools();
+  // this._add_project_share_tools();
 
   this._add_spacer();
+  this._add_project_tools();
+  this._add_spacer();
 
-  var keyboard = _via_util_get_svg_button('micon_keyboard', 'Keyboard Shortcuts');
-  keyboard.addEventListener('click', function() {
-    _via_util_page_show('page_keyboard_shortcut');
-  }.bind(this));
-  this.c.appendChild(keyboard);
 
-  var help = _via_util_get_svg_button('micon_help', 'About VIA');
-  help.addEventListener('click', function() {
-    _via_util_page_show('page_about');
-  }.bind(this));
-  this.c.appendChild(help);
+
+  // var keyboard = _via_util_get_svg_button('micon_keyboard', 'Keyboard Shortcuts');
+  // keyboard.addEventListener('click', function() {
+  //   _via_util_page_show('page_keyboard_shortcut');
+  // }.bind(this));
+  // this.c.appendChild(keyboard);
+
+  // var help = _via_util_get_svg_button('micon_help', 'About VIA');
+  // help.addEventListener('click', function() {
+  //   _via_util_page_show('page_about');
+  // }.bind(this));
+  // this.c.appendChild(help);
 }
 
 _via_control_panel.prototype._add_spacer = function() {
@@ -89,23 +92,23 @@ _via_control_panel.prototype._add_view_manager_tools = function() {
   next_view.addEventListener('click', this.via.vm._on_next_view.bind(this.via.vm));
   this.c.appendChild(next_view);
 
-  var add_media_local = _via_util_get_svg_button('micon_add_circle', 'Add Audio or Video File in Local Computer', 'add_media_local');
-  add_media_local.addEventListener('click', this.via.vm._on_add_media_local.bind(this.via.vm));
-  this.c.appendChild(add_media_local);
+  // var add_media_local = _via_util_get_svg_button('micon_add_circle', 'Add Audio or Video File in Local Computer', 'add_media_local');
+  // add_media_local.addEventListener('click', this.via.vm._on_add_media_local.bind(this.via.vm));
+  // this.c.appendChild(add_media_local);
 
-  var add_media_bulk = _via_util_get_svg_button('micon_lib_add', 'Bulk add file URI ( e.g. file:///... or http://... ) contained in a local CSV file where each row is a remote or local filename.', 'add_media_bulk');
-  //add_media_bulk.addEventListener('click', this.via.vm._on_add_media_bulk.bind(this.via.vm));
-  add_media_bulk.addEventListener('click', function() {
-    var action_map = {
-      'via_page_fileuri_button_bulk_add':this._page_on_action_fileuri_bulk_add.bind(this),
-    }
-    _via_util_page_show('page_fileuri_bulk_add', action_map);
-  }.bind(this));
-  this.c.appendChild(add_media_bulk);
+  // var add_media_bulk = _via_util_get_svg_button('micon_lib_add', 'Bulk add file URI ( e.g. file:///... or http://... ) contained in a local CSV file where each row is a remote or local filename.', 'add_media_bulk');
+  // //add_media_bulk.addEventListener('click', this.via.vm._on_add_media_bulk.bind(this.via.vm));
+  // add_media_bulk.addEventListener('click', function() {
+  //   var action_map = {
+  //     'via_page_fileuri_button_bulk_add':this._page_on_action_fileuri_bulk_add.bind(this),
+  //   }
+  //   _via_util_page_show('page_fileuri_bulk_add', action_map);
+  // }.bind(this));
+  // this.c.appendChild(add_media_bulk);
 
-  var del_view = _via_util_get_svg_button('micon_remove_circle', 'Remove the Current File', 'remove_media');
-  del_view.addEventListener('click', this.via.vm._on_del_view.bind(this.via.vm));
-  this.c.appendChild(del_view);
+  // var del_view = _via_util_get_svg_button('micon_remove_circle', 'Remove the Current File', 'remove_media');
+  // del_view.addEventListener('click', this.via.vm._on_del_view.bind(this.via.vm));
+  // this.c.appendChild(del_view);
 }
 
 _via_control_panel.prototype._add_region_shape_selector = function() {
@@ -183,11 +186,11 @@ _via_control_panel.prototype._set_region_shape = function(shape) {
 }
 
 _via_control_panel.prototype._add_project_tools = function() {
-  var load = _via_util_get_svg_button('micon_open', 'Open a VIA Project');
-  load.addEventListener('click', function() {
-    _via_util_file_select_local(_VIA_FILE_SELECT_TYPE.JSON, this._project_load_on_local_file_select.bind(this), false);
-  }.bind(this));
-  this.c.appendChild(load);
+  // var load = _via_util_get_svg_button('micon_open', 'Open a VIA Project');
+  // load.addEventListener('click', function() {
+  //   _via_util_file_select_local(_VIA_FILE_SELECT_TYPE.JSON, this._project_load_on_local_file_select.bind(this), false);
+  // }.bind(this));
+  // this.c.appendChild(load);
 
   var save = _via_util_get_svg_button('micon_save', 'Save current VIA Project');
   save.addEventListener('click', function() {
@@ -195,9 +198,9 @@ _via_control_panel.prototype._add_project_tools = function() {
   }.bind(this));
   this.c.appendChild(save);
 
-  var import_export_annotation = _via_util_get_svg_button('micon_import_export', 'Import or Export Annotations');
-  import_export_annotation.addEventListener('click', this._page_show_import_export.bind(this));
-  this.c.appendChild(import_export_annotation);
+  // var import_export_annotation = _via_util_get_svg_button('micon_import_export', 'Import or Export Annotations');
+  // import_export_annotation.addEventListener('click', this._page_show_import_export.bind(this));
+  // this.c.appendChild(import_export_annotation);
 }
 
 _via_control_panel.prototype._page_show_import_export = function(d) {

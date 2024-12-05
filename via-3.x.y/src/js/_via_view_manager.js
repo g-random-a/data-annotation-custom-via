@@ -47,6 +47,97 @@ _via_view_manager.prototype._init = async function() {
 
     this.d.store.attribute = response.attributes;
 
+    const metadata = `{
+          "4_lxjUMGAf": {
+              "vid": "4",
+              "flg": 0,
+              "z": [],
+              "xy": [
+                  1,
+                  538.832,
+                  171.81
+              ],
+              "av": {
+                  "2": "2",
+                  "3": "1"
+              }
+          },
+          "4_OvXQL9Kp": {
+              "vid": "4",
+              "flg": 0,
+              "z": [],
+              "xy": [
+                  1,
+                  518.283,
+                  224.894
+              ],
+              "av": {
+                  "2": "2",
+                  "3": "1"
+              }
+          },
+          "4_2Pm047rq": {
+              "vid": "4",
+              "flg": 0,
+              "z": [],
+              "xy": [
+                  1,
+                  445.221,
+                  171.239
+              ],
+              "av": {
+                  "2": "2",
+                  "3": "1"
+              }
+          },
+          "3_SlmbCEjC": {
+              "vid": "3",
+              "flg": 0,
+              "z": [],
+              "xy": [
+                  1,
+                  384.903,
+                  136.32
+              ],
+              "av": {
+                  "2": "2",
+                  "3": "1"
+              }
+          },
+          "4_XEPulrV3": {
+              "vid": "4",
+              "flg": 0,
+              "z": [],
+              "xy": [
+                  1,
+                  247.726,
+                  257.429
+              ],
+              "av": {
+                  "2": "2",
+                  "3": "1"
+              }
+          },
+          "4_jXdc8l80": {
+              "vid": "4",
+              "flg": 0,
+              "z": [],
+              "xy": [
+                  2,
+                  230.602,
+                  24.544,
+                  238.022,
+                  232.885
+              ],
+              "av": {
+                  "2": "2",
+                  "3": "1"
+              }
+          }
+      }`
+    
+    this.d.store.metadata = JSON.parse(metadata);
+
     if (imageMetadata) {
       for (var i = 0; i < imageMetadata.length; i++) {
         this._on_add_media_remote_direct(imageMetadata[i], response.fileType);
@@ -54,6 +145,7 @@ _via_view_manager.prototype._init = async function() {
     } else {
       console.warn('Failed to fetch or initialize annotation image.');
     }
+    this.d.store.project.pname = "Image Annotation Task";
   } else {
     console.log('No sessionId found in URL. Proceeding with default initialization.');
   }
@@ -125,8 +217,10 @@ _via_view_manager.prototype._on_add_media_remote_direct = function(imageUrl, typ
 _via_view_manager.prototype._init_ui_elements = function() {
   this.pname = document.createElement('input');
   this.pname.setAttribute('type', 'text');
+  this.pname.setAttribute('disabled', 'true');
   this.pname.setAttribute('id', 'via_project_name_input');
-  this.pname.setAttribute('value', this.d.store.project.pname);
+  // this.pname.setAttribute('value', this.d.store.project.pname);
+  this.pname.setAttribute('value', "Image Annotation Task");
   this.pname.setAttribute('title', 'Project Name (click to update)');
   this.pname.addEventListener('change', this._on_pname_change.bind(this));
 

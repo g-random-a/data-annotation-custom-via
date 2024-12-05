@@ -69,6 +69,9 @@ _via_view_annotator.prototype._show_start_info = function() {
   via_page.innerHTML = document.getElementById('via_start_info_content').innerHTML;
   this.c.innerHTML = '';
   this.c.appendChild(via_page);
+
+  console.log("00-0-0-0-0-0--0--0-0-0-0-0-0-0-0-0-0-")
+  console.log(this)
 }
 
 _via_view_annotator.prototype.view_show = function(vid) {

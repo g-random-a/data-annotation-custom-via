@@ -78,9 +78,9 @@ _via_control_panel.prototype._add_view_manager_tools = function() {
   next_view.addEventListener('click', this.via.vm._on_next_view.bind(this.via.vm));
   this.c.appendChild(next_view);
 
-  var add_media_local = _via_util_get_svg_button('micon_add_circle', 'Add Audio or Video File in Local Computer', 'add_media_local');
-  add_media_local.addEventListener('click', this.via.vm._on_add_media_local.bind(this.via.vm));
-  this.c.appendChild(add_media_local);
+  // var add_media_local = _via_util_get_svg_button('micon_add_circle', 'Add Audio or Video File in Local Computer', 'add_media_local');
+  // add_media_local.addEventListener('click', this.via.vm._on_add_media_local.bind(this.via.vm));
+  // this.c.appendChild(add_media_local);
 
   var add_media_bulk = _via_util_get_svg_button('micon_lib_add', 'Bulk add file URI ( e.g. file:///... or http://... ) contained in a local CSV file where each row is a remote or local filename.', 'add_media_bulk');
   //add_media_bulk.addEventListener('click', this.via.vm._on_add_media_bulk.bind(this.via.vm));
